@@ -13,7 +13,7 @@
     <img src="https://github.com/Doswin/LSTMConvSR/blob/main/Overview.svg" width=95%>
 <p>
 
-## LSTM-First–CNN-Next Architecture
+## LSTM-First–CNN-Next
 
 <p align="center">
     <img src="https://github.com/Doswin/LSTMConvSR/blob/main/LSTM-First%E2%80%93CNN-Next.svg" width=95%>
