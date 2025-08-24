@@ -1,0 +1,102 @@
+# general settings for image SR training
+name: 00_LSTMConvSR_x4_potsdam_bic_base
+model_type: SRModel
+scale: 4
+num_gpu: 1
+manual_seed: 10
+
+# dataset and data loader settings
+datasets:
+  train:
+    name: dataset_potsdam_bic_x4
+    type: PairedImageDataset
+    dataroot_gt: datasets/dataset_potsdam_bic_x4/train/HR.lmdb
+    dataroot_lq: datasets/dataset_potsdam_bic_x4/train/LR.lmdb
+    filename_tmpl: '{}'
+    io_backend:
+      type: lmdb
+
+    gt_size: 128
+    use_hflip: true
+    use_rot: true
+
+    # data loader
+    num_worker_per_gpu: 4
+    batch_size_per_gpu: 16
+    dataset_enlarge_ratio: 1
+
+  val:
+    name: dataset_potsdam_val_bic_x4
+    type: PairedImageDataset
+    dataroot_gt: datasets/dataset_potsdam_bic_x4/val/HR
+    dataroot_lq: datasets/dataset_potsdam_bic_x4/val/LR
+    io_backend:
+      type: disk
+
+
+# network structures
+# Please modify rgb_mean according to your needs.
+network_g:
+  type: LSTMConvSR
+  upscale: 4
+  in_chans: 3
+  img_range: 1.
+  embed_dim: 128
+  depths: [1, 1, 1, 1]
+  mlp_ratio: 4.
+  CNN_num: 12
+  upsampler: 'pixelshuffle'
+  resi_connection: '1conv'
+  rgb_mean: [0.4488, 0.4371, 0.4040]
+
+# path
+path:
+  pretrain_network_g: ~
+  strict_load_g: false
+  resume_state: ~
+
+# training settings
+train:
+  ema_decay: 0.999
+  optim_g:
+    type: Adam
+    lr: !!float 1e-4
+    weight_decay: 0
+    betas: [0.9, 0.99]
+
+  scheduler:
+    type: MultiStepLR
+    milestones: [13500]
+    gamma: 0.5 
+
+  total_iter: 27000
+  warmup_iter: -1  # no warm up
+
+  # losses
+  pixel_opt:
+    type: L1Loss
+    loss_weight: 1.0
+    reduction: mean
+
+# validation settings
+val:
+  val_freq: !!float 2e5
+  save_img: false
+
+  metrics:
+    psnr: # metric name, can be arbitrary
+      type: calculate_psnr
+      crop_border: 4
+      test_y_channel: true
+      better: higher  # the higher, the better. Default: higher
+    ssim:
+      type: calculate_ssim
+      crop_border: 4
+      test_y_channel: true
+      better: higher  # the higher, the better. Default: higher
+
+# logging settings
+logger:
+  print_freq: 1000
+  save_checkpoint_freq: !!float 2e5
+  use_tb_logger: false
