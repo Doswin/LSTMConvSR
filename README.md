@@ -11,7 +11,7 @@
 ## LSTM-First–CNN-Next Architecture
 
 <p align="center">
-    <img src="https://github.com/Doswin/GDSR/LSTMConvSR/LSTM-First–CNN-Next.png" width=95%>
+    <img src="https://github.com/Doswin/GDSR/LSTMConvSR/LSTM-First–CNN-Next.svg" width=95%>
 <p>
 
 ## Training and Testing
