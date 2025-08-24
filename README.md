@@ -7,6 +7,11 @@
 
 </div>
 
+## Overview
+
+<p align="center">
+    <img src="https://github.com/Doswin/LSTMConvSR/blob/main/Overview.svg" width=95%>
+<p>
 
 ## LSTM-First–CNN-Next Architecture
 
