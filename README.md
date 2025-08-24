@@ -48,6 +48,6 @@ DOI = {10.3390/rs17152745}
 
 Some of the codes in this repo are borrowed from:  
 - [BasicSR](https://github.com/XPixelGroup/BasicSR)  
-- [vision-lstm](https://github.com/NX-AI/vision-lstm) 
+- [Vision-LSTM](https://github.com/NX-AI/vision-lstm) 
 
 Thanks to their great work.
